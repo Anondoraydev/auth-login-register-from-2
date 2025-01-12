@@ -6,16 +6,19 @@ export const AuthContext = createContext(null)
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-
+    const [lodding, setLodding] = useState(true);
     const createUser = (email, password) => {
+        setLodding(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
     const singinUser = (email, password) => {
+        setLodding(true)
         return signInWithEmailAndPassword(auth, email, password)
     }
 
     const logOut = () => {
+        setLodding(true)
         return signOut(auth)
 
     }
@@ -23,6 +26,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser)
+            setLodding(false)
             console.log('ovegarving carrent user', currentUser);
 
         })
@@ -32,7 +36,7 @@ const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    const authInfo = { user, createUser, singinUser, logOut };
+    const authInfo = { lodding, user, createUser, singinUser, logOut };
     return (
         <AuthContext.Provider value={authInfo}>
             {children}
