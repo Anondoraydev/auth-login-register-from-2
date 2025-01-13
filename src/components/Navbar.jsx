@@ -18,6 +18,13 @@ const Navbar = () => {
         <li><NavLink to={'/login'}>Login</NavLink></li>
         <li><NavLink to={'/register'}>Register</NavLink></li>
         <li><NavLink to={'/orders'}>Orders</NavLink></li>
+        {user &&
+            <>
+                <li><NavLink to={'/profile'}>Profile</NavLink></li>
+                <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
+
+            </>
+        }
     </>
     return (
         <div>
@@ -71,10 +78,10 @@ const Navbar = () => {
                                 <button className="btn btn-sm">Login</button>
                             </Link>
                     }
-                    
+
                     {/* step 1 */}
 
-                    {/* <a onClick={heandelLogout} className="btn  btn-sm">Sing out</a> */} 
+                    {/* <a onClick={heandelLogout} className="btn  btn-sm">Sing out</a> */}
                 </div>
             </div>
         </div>

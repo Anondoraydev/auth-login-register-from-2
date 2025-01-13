@@ -1,27 +1,40 @@
 import { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../providers/AuthProvider";
 
 const Login = () => {
-    const { singinUser } = useContext(AuthContext)
+    const { singinUser, singInWithGoogle } = useContext(AuthContext)
+    const navigate = useNavigate()
     const headelLogin = e => {
         e.preventDefault()
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, password);
 
-          // login user in firebase
+        // login user in firebase
 
-          singinUser(email,password)
-          .then(result=>{
-            console.log(result.user);
-            
-        })
-        .catch(error=>{
-            console.error(error)
-        })
+        singinUser(email, password)
+            .then(result => {
+                console.log(result.user);
+                e.target.reset();
+                navigate('/')
+
+            })
+            .catch(error => {
+                console.error(error)
+            })
 
     }
+
+    const heandelSinginWithGoogle = () => {
+        singInWithGoogle()
+            .then(result => {
+                console.log(result.user);
+
+            })
+            .catch(error => console.error(error))
+    }
+
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col  ">
@@ -51,6 +64,7 @@ const Login = () => {
                         </div>
                     </form>
                     <p className="pl-8">New here? Please<Link to={'/register'}><button className="btn btn-active btn-link">Register</button></Link></p>
+                    <p><button onClick={heandelSinginWithGoogle} className="btn btn-ghost pl-8">GOOGLE</button></p>
                 </div>
             </div>
         </div>
